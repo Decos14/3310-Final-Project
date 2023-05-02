@@ -44,23 +44,29 @@ def QR_Factor(A):
                 Q[i][k] = Q[i][k]-Q[i][j]*R[j][k]
     return(Q,R)
         
-def QR_EIG(A, A_prev):
+def QR_Eig(A, A_prev):
     epsilon = 0.01
     Q,R = QR_Factor(A)
     sum = 0
     for i in range(len(A)):
         sum += A[i][i] - A_prev[i][i]
     if sum > epsilon:
-        return QR_EIG(Mat_Mul(R,Q), A)
+        return QR_Eig(Mat_Mul(R,Q), A)
     else:
         return A
     
 def SV_Mat(matrix):
     epsilon = 0.000001
     K = Mat_Mul(Transpose(matrix), matrix)
-    A = QR_EIG(K,[[0 for _ in range(len(K[0]))] for _ in range(len(K))])
+    A = QR_Eig(K,[[0 for _ in range(len(K[0]))] for _ in range(len(K))])
     SV = [[0 for _ in range(len(A[0]))] for _ in range(len(A))]
     for i in range(len(A)):
         if A[i][i] > epsilon:
             SV[i][i] = A[i][i]
     return SV
+
+def Diag_Inv(A):
+    inv = [[0 for _ in range(len(A[0]))] for _ in range(len(A))]
+    for i in range(len(A)):
+        inv[i][i]=1/(A[i][i])
+    return inv
