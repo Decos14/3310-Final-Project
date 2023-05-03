@@ -70,3 +70,5 @@ def Diag_Inv(A):
     for i in range(len(A)):
         inv[i][i]=1/(A[i][i])
     return inv
+
+##Eigenvector function
